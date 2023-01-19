@@ -1,0 +1,23 @@
+openapi: "3.0.0"
+info:
+  title: 答案管理システム API
+  version: 0.0.1
+servers:
+  - url: https://reversi.kyosutech.com
+    description: プロダクション API
+  - url: http://{host}:{port}
+    description: 開発用
+    variables:
+      host:
+        default: localhost
+      port:
+        default: '8000'
+paths:
+  "/health":
+    get:
+      summary: "health check"
+      tags:
+      - health
+      responses:
+        "200":
+          description: "OK"
