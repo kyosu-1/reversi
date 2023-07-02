@@ -8,8 +8,16 @@ import (
 	"github.com/kyosu-1/reversi/server/internal/strategy"
 )
 
+type MessageType string
+
+const (
+	INIT   MessageType = "init"
+	MOVE   MessageType = "move"
+	UPDATE MessageType = "update"
+)
+
 type Message struct {
-	Type string      `json:"type"`
+	Type MessageType `json:"type"`
 	Data interface{} `json:"data"`
 }
 
@@ -59,7 +67,7 @@ func ServeWs(s *Server, w http.ResponseWriter, r *http.Request) {
 	go s.handleMessages(conn)
 	go s.run()
 
-	msg := Message{"init", s.Game}
+	msg := Message{INIT, s.Game}
 	conn.WriteJSON(msg)
 }
 
@@ -74,7 +82,7 @@ func (s *Server) handleMessages(conn *websocket.Conn) {
 		}
 
 		switch msg.Type {
-		case "move":
+		case MOVE:
 			move := msg.Data.(map[string]interface{})
 			x := int(move["x"].(float64))
 			y := int(move["y"].(float64))
@@ -85,6 +93,6 @@ func (s *Server) handleMessages(conn *websocket.Conn) {
 			}
 		}
 
-		s.Broadcast <- Message{"update", s.Game}
+		s.Broadcast <- Message{UPDATE, s.Game}
 	}
 }
