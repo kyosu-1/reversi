@@ -22,5 +22,7 @@ func main() {
 		server.ServeWs(s, w, r)
 	})
 
+	log.Printf("Starting server on %s", *addr)
+
 	log.Fatal(http.ListenAndServe(*addr, nil))
 }
