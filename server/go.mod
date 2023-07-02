@@ -1,6 +1,6 @@
-module github.com/kyosu-1/reversi
+module github.com/kyosu-1/reversi/server
 
-go 1.19
+go 1.20
 
 require (
 	github.com/tommy351/zap-stackdriver v0.1.4
